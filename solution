@@ -1,0 +1,164 @@
+C programming questions
+
+
+Q1 Write a loop statement that will show the following output:
+
+1
+
+12
+
+123
+
+1234
+
+12345
+
+Ans : 
+```
+#include <iostream>
+using namespace std;
+int main() {
+    for(int i=0;i<5;i++){
+        for(int j=0;j<=i;j++) cout<<j+1<<" ";
+        cout<<endl;
+    }
+    return 0;
+}
+```
+
+
+Q2. What will be the output of the following C code?
+
+    #include <stdio.h>
+    int main()
+    {
+        int a = 2;
+        if (a >> 1)
+           printf("%d\n", a);
+    }
+Ans : 2
+
+Q3- Write a C program to add Two One Dimensional Array elements and show the output
+
+Ans : 
+```
+#include <stdio.h>
+#define SIZE 5
+using namespace std;
+// Funtion that will take input 2 arrays and return their sum .
+int* add(int *a, int *b, int n){
+    int* sum = new int(n);
+    for(int i=0;i<n;i++) sum[i] = a[i] + b[i];
+    return sum;
+}
+
+int main() {
+    int arr1[SIZE] = {1, 2, 3, 4, 5};
+    int arr2[SIZE] = {6, 7, 8, 9, 10};
+    int* sum = add(arr1,arr2,SIZE);
+    int i = 0;
+    for (; i < SIZE; i++){
+        printf("%d + %d = %d\n", arr1[i], arr2[i], sum[i]);
+    }
+    return 0;
+}
+```
+
+Q4- Write C program to subtract two matrices(2D array) of 3x3 and show the output
+Ans : 
+```
+#include <stdio.h>
+#define ROWS 3
+#define COLS 3
+int main() {
+    int matrix1[ROWS][COLS] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    int matrix2[ROWS][COLS] = {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
+    int result[ROWS][COLS];
+    int i, j;
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            result[i][j] = matrix1[i][j] - matrix2[i][j];
+        }
+    }
+    
+    printf("Matrix 1:\n");
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%d ", matrix1[i][j]);
+        }
+        printf("\n");
+    }
+    
+    printf("Matrix 2:\n");
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%d ", matrix2[i][j]);
+        }
+        printf("\n");
+    }
+    
+    printf("Result:\n");
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+```
+
+Q5- Desing 16:1 mux using 4:1mux 
+Ans :
+```
+#include <stdio.h>
+
+int mux_4_1(int a, int b,int c,int d,int c1,int c2){
+    if(c1&&c2) return d;
+    else if(c1&&(!c2)) return c;
+    else if(c1) return b;
+    return a;
+}
+
+int main() {
+    int sel[4]; // Selection lines
+    int data[16]; // Data inputs
+    int mux1_output, mux2_output, mux3_output, mux4_output, final_output;
+    
+    // Initialize data inputs
+    data[0] = 0;
+    data[1] = 1;
+    data[2] = 0;
+    data[3] = 1;
+    data[4] = 0;
+    data[5] = 1;
+    data[6] = 0;
+    data[7] = 1;
+    data[8] = 0;
+    data[9] = 1;
+    data[10] = 0;
+    data[11] = 1;
+    data[12] = 0;
+    data[13] = 1;
+    data[14] = 0;
+    data[15] = 1;
+    
+    // Read selection lines
+    printf("Enter selection lines (4 bits): ");
+    scanf("%1d%1d%1d%1d", &sel[0], &sel[1], &sel[2], &sel[3]);
+    // First mux 4:1
+    mux1_output = mux_4_1(data[0],data[1],data[2],data[3],sel[0],sel[1]);
+    // Second mux 4:1
+    mux2_output = mux_4_1(data[4],data[5],data[6],data[7],sel[0],sel[1]);
+    // third mux 4:1
+    mux3_output = mux_4_1(data[8],data[9],data[10],data[11],sel[0],sel[1]);
+    // fourth mux 4:1
+    mux4_output = mux_4_1(data[12],data[13],data[14],data[15],sel[0],sel[1]);
+    // final mux that will use other 4 mux result and 2 other select lines
+    final_output = mux_4_1(mux1_output,mux2_output,mux3_output,mux4_output,sel[2],sel[3]);
+    // Output final result
+    printf("Output: %d\n", final_output);
+    return 0;
+}
+```
